@@ -1,0 +1,15 @@
+{
+	"name" : "Code-cache-to-dos" ,
+	"version"      : "0.0.0",
+  	"description"  : "To do application for code cache projects",
+  	"main"         : "server.js",
+  	"author"       : "Ancalagon",
+  	"dependencies" : {
+    	"express"    : "~4.7.2",
+    	"mongoose"   : "~3.6.2",
+    	"morgan"     : "~1.2.2",
+    	"body-parser": "~1.5.2",
+    	"method-override": "~2.1.2"
+    }
+
+}

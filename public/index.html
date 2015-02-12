@@ -1,0 +1,195 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> Optimize mobile viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Code cache To Do ists</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link href="dist/css/flat-ui.css" rel="stylesheet"><!-- load bootstrap -->
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #todo-list              { margin-bottom:30px; }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-cookies.js"></script><!-- load angular -->
+    <script src="app.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+    <div class="container">
+
+        
+
+
+    <div ng-show="loggedIn == false">
+        <div class="jumbotron text-center">
+            <h1>Code cache ToDoist</h1>
+        </div>
+
+        
+
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-4 text-center">
+            </div>
+
+            <div class="col-sm-4 text-center">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="Login" ng-model = "logInData.userName">
+                        <input type="password" class="form-control input-lg text-center" placeholder="Password" ng-model = "logInData.password">
+                    </div>
+                        <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click = "logIn()">Login </button>
+                    <button type="submit" class="btn btn-primary btn-lg" >Cancel </button>
+                </form>
+            </div>
+            <div class="col-sm-4">
+            </div>
+        </div>
+        </div>
+
+
+
+
+        <div ng-show=" loggedIn == true ">
+         <!-- HEADER AND TODO COUNT -->
+         <button type="submit" class="btn btn-primary btn-lg pull-right" ng-click="logUserOut()">Logout</button>
+        <div class="jumbotron text-center">
+            <h1>I'm {{ logInData.userName }}, the {{ logInData.color }} <br><span class="label label-danger">{{ todos.length }}</span> <span class="label label-primary">{{ logInData.completed }}</span></h1>
+        </div>
+
+        <!-- TODO LIST -->
+        <div id="todo-list" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos -->
+                <div class="list-group">
+                <div class="list-group-item" ng-repeat="todo in todos">
+                    <label>
+                        <input type="checkbox" ng-click="completeTodo(todo._id)"> {{ todo.task }}
+                    </label>
+                </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="I want to pet a dragon that will love me forever" ng-model="taskData.task">
+                    </div>
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                </form>
+            </div>
+        </div>
+
+        </div>
+
+        
+        <div ng-show=" loggedIn == true ">
+            <!-- <div ng-repeat="todos in checkedTodos"> -->
+            <div class="text-center">
+                <br>
+                <h4>Completed Tasks</h4>
+                <br> 
+            </div>
+            
+            <div class="list-group" ng-repeat="ctodo in checkedTodos">
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ ctodo.task }}</h4>
+                    <p class="list-group-item-text">
+                    <div class="list-group">
+                        <div class="list-group-item">Priority <span class="badge">{{ ctodo.priority }}</span></div>
+                        <div class="list-group-item"> Weightage <span class="badge">{{ ctodo.weightage }}</span></div>
+                    </div>
+                    </p>
+                <p class="list-group-item-text"><span class="label label-default">{{ ctodo.user_name }}, the {{ ctodo.color}}</span></p>
+                </div>
+                </div>
+                <!--
+                    <li class="list-group-item" ng-repeat="ctodo in checkedTodos">{{ ctodo.task }} <br>{{ ctodo.completed_on }}<br> {{ ctodo.weightage }} <br>{{ ctodo.priority }}<br><span class="label label-default">{{ ctodo.user_name }}</span></li>
+                    
+                </div> -->
+            
+        </div>
+
+        
+
+        <div ng-show=" loggedIn == admin ">
+         <!-- HEADER AND TODO COUNT -->
+         <button type="submit" class="btn btn-primary btn-lg pull-right" ng-click="logUserOut()">Logout</button>
+        <div class="jumbotron text-center">
+            <h1>I'm Sauron, the Dark Lord <span class="label label-danger"></span></h1>
+        </div>
+
+        <!-- TODO LIST 
+        <div id="todo-list" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+
+                <!-- LOOP OVER THE TODOS IN $scope.todos 
+                <div class="checkbox" ng-repeat="todo in todos">
+                    <label>
+                        <input type="checkbox" ng-click="completeTodo(todo._id)"> {{ todo.task }}
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        -->
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+
+                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                        <input type="text" class="form-control input-lg text-center" placeholder="What evil do you want him to do ?" ng-model="adminData.task">
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="Which great beast do you want to summon ?" ng-model="adminData.user">
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="Which color is he associated with ?" ng-model="adminData.color">
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="By when you need this evil deed completed ?" ng-model="adminData.deadline">
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="How evil is this deed ?" ng-model="adminData.priority">
+
+                        <input type="text" class="form-control input-lg text-center" placeholder="How much greatness will be achieved ?" ng-model="adminData.weightage">
+
+ 
+                        
+                    </div>
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Burzum-ishi krimpatul</button>
+                </form>
+            </div>
+        </div>
+
+        </div>
+
+
+       
+    </div>
+
+</body>
+</html>

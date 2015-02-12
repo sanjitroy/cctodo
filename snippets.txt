@@ -1,0 +1,3 @@
+var cache = $cacheFactory('myCache');
+cache.put("hello", "world");
+cache.get("hello");
